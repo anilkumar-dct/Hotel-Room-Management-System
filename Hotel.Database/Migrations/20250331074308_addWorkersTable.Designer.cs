@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250331061527_addWorkerTable")]
-    partial class addWorkerTable
+    [Migration("20250331074308_addWorkersTable")]
+    partial class addWorkersTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,25 @@ namespace Hotel.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Hotel.Models.Models.Rooms", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Rooms");
+                });
+
             modelBuilder.Entity("Hotel.Models.Models.Workers", b =>
                 {
                     b.Property<int>("ID")
@@ -32,9 +51,8 @@ namespace Hotel.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Availability")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Availability")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -45,27 +63,27 @@ namespace Hotel.Database.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Workers");
 
                     b.HasData(
                         new
                         {
                             ID = 1,
-                            Availability = "Available",
+                            Availability = 0,
                             Name = "Jone",
                             RoomNumber = 101
                         },
                         new
                         {
                             ID = 2,
-                            Availability = "Occupied",
+                            Availability = 2,
                             Name = "Sarah Jonshon",
                             RoomNumber = 102
                         },
                         new
                         {
                             ID = 3,
-                            Availability = "On Break",
+                            Availability = 1,
                             Name = "Emily",
                             RoomNumber = 103
                         });

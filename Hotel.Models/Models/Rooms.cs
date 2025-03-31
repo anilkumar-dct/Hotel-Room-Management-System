@@ -10,7 +10,13 @@ namespace Hotel.Models.Models
     public class Rooms
     {
         [Key] public int ID {  get; set; }
-        [Key] public int RoomNumber { get; set; }
-        [Key] public string Status { get; set; }
+        [Required] public int RoomNumber { get; set; }
+        [Required] public RoomStatus Status { get; set; } = RoomStatus.Available;
+    }
+    public enum RoomStatus
+    {
+        Available,
+        Occupied,
+        UnderMaintenance
     }
 }

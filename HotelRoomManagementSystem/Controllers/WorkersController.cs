@@ -1,0 +1,36 @@
+﻿using Hotel.Models.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HotelRoomManagementSystem.Controllers
+{
+    public class WorkersController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        public WorkersController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public IActionResult Workers()
+        {
+            List<Workers> workers = _context.Workers.ToList();
+            return View(workers);
+        }
+        //Short Based on Availability
+        public IActionResult AllStatus(WorkerStatus? status)
+        {
+            ViewBag.SelectedStatus = status;
+            //Get all the Data
+            var worker = _context.Workers.AsQueryable();
+            if (status.HasValue)
+            {
+                worker = worker.Where(r => r.Availability == status);
+            }
+            return View("Workers",worker.ToList());
+        }
+        //Adding New Worker
+        public IActionResult Add()
+        {
+            return View();
+        }
+    }
+}

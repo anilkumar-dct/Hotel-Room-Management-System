@@ -1,0 +1,48 @@
+﻿@using Hotel.Models.Models
+@model List<Hotel.Models.Models.Rooms>
+@{
+    ViewData["Title"] = "Home Page";
+}
+ <div class="container mt-5">
+        <h3 class="fw-bold">Hotel Room Management</h3>
+        <p class="text-muted">Manage all hotel rooms and their current status.</p>
+        <form asp-action="AllRooms" asp-controller="Rooms" method="get">
+        <div class="d-flex justify-content-end mb-3">
+            <select class="form-select w-auto" name="roomStatus" onchange 
+            ="this.form.submit()">
+                <option value="" selected>All Rooms</option>
+                <option value="0" selected="@(ViewBag.SelectedRoom == RoomStatus.Available?"selected":null)">Available</option>
+                <option value="1" selected="@(ViewBag.SelectedRoom == RoomStatus.Occupied?"selected":null)">Occupied</option>
+                <option value="2" selected="@(ViewBag.SelectedRoom ==RoomStatus.UnderMaintenance?"selected" :null)">Under Maintenance</option>
+            </select>
+        </div>
+    </form>
+        
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Room ID</th>
+                    <th>Room Number</th>
+                    <th>Status</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+              @foreach(var data in Model){
+                  <tr>
+                     <td>@data.ID</td>
+                    <td>@data.RoomNumber</td>
+                    <td class="bg-primary">@data.Status</td>
+                   
+                    <td></td>
+                  </tr>
+              }
+             
+            </tbody>
+        </table>
+    </div>
+
+
+

@@ -15,10 +15,16 @@ namespace Hotel.Models.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        [DisplayName("Availability Status")]
-        public string Availability { get; set; }
+        [DisplayName("Availability Availability")]
+        public WorkerStatus Availability { get; set; }= WorkerStatus.Available;
         [Required]
         [DisplayName("Room Number")]
         public int RoomNumber { get; set; }
+    }
+    public enum WorkerStatus
+    {
+        Available,
+        OnBreak,
+        Occupied,
     }
 }

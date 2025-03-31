@@ -1,0 +1,60 @@
+﻿@using Hotel.Models.Models
+@model List<Hotel.Models.Models.Workers>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="container mt-5">
+    <h3 class="fw-bold">Hotel Room Management</h3>
+    <div class="row">
+        <div class="col-8">
+            <p class="text-muted">Manage all hotel rooms and their current status.</p>
+        </div>
+        <div class="col-4 text-end">
+            <a class="btn btn-primary" asp-action="Add" asp-controller="Workers">
+                <i class="bi bi-plus-circle"></i> Add New Worker
+            </a>
+        </div>
+    </div>
+</div>
+    
+    <form method="get" asp-action="AllStatus" asp-controller="Workers">
+        <div class="d-flex justify-content-start mb-3">
+            <select class="form-select w-auto" name="status" onchange="this.form.submit()">
+                <option value="" selected="@(ViewBag.SelectedStatus == null)">All Status</option>
+                <option value="0" selected="@(ViewBag.SelectedStatus == WorkerStatus.Available ? "selected" : null)">Available</option>
+                <option value="2" selected="@(ViewBag.SelectedStatus == WorkerStatus.Occupied ? "selected" : null)">Occupied</option>
+                <option value="1" selected="@(ViewBag.SelectedStatus == WorkerStatus.OnBreak ?"selected" :null)">On Break</option>
+            </select>
+        </div>
+
+    </form>
+
+    <table class="table table-bordered align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Availability Status</th>
+                <th class="text-center">Room Number</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var data in Model)
+            {
+                <tr>
+                    <td>@data.ID</td>
+                    <td>@data.Name</td>
+                    <td class="bg-primary">@data.Availability</td>
+                    <td>@data.RoomNumber</td>
+                    <td></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+
