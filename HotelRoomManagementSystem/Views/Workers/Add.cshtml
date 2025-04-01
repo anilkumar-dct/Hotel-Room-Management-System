@@ -1,10 +1,12 @@
-﻿@{
+﻿@using Hotel.Models.Models
+@model Hotel.Models.Models.Workers
+@{
     ViewData["Title"] = "Add Worker";
 }
 <div class="container mt-5">
     <h2 class="mb-4">Add New Worker</h2>
 
-    <form>
+    <form method="post" asp-action="Add">
         <div class="card mb-4">
             <div class="card-header bg-light">
                 <h5 class="mb-0">Provide Details of Worker</h5>
@@ -14,7 +16,7 @@
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" placeholder="Enter Name">
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Enter Name">
                     </div>
                 </div>
 
@@ -22,13 +24,10 @@
                     <label class="col-sm-2 col-form-label">Assign Room</label>
                     <div class="col-sm-10">
                         <div class="mb-3">
-                            <label for="roomSelect" class="form-label">Select Room</label>
-                            <select  class="form-control">
-                                @foreach (var room in Model.AvailableRooms)
-                                {
-                                    <option value="@room.RoomNumber">@room.RoomNumber</option>
-                                }
-                            </select>
+                            <label asp-for="RoomId"></label>
+                            <select asp-for="RoomId" asp-items="ViewBag.RoomList" class="form-control">
+                                <option value="">-- Select Room --</option>
+                            </select>>
                         </div>
                     </div>
                 </div>
@@ -40,18 +39,16 @@
                 <h5 class="mb-0">Status</h5>
             </div>
             <div class="card-body">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="status" id="available" checked>
-                    <label class="form-check-label" for="available">
-                        Available
-                    </label>
+                <div class="card-body">
+                    <input type="hidden" asp-for="Availability" value="@WorkerStatus.Available" />
+                    <div class="text-success">Status: Available</div>
                 </div>
             </div>
         </div> 
 
         <div class="d-flex justify-content-end gap-2">
-            <a class="btn btn-outline-secondary" asp-action="" asp-controller="">Cancel</a>
-            <a class="btn btn-outline-primary" asp-action="" asp-controller="">Create</a>
+            <a class="btn btn-outline-secondary" asp-action="Workers">Cancel</a>
+            <button type="submit" class="btn btn-primary">Create</button> <!-- Changed to proper submit button -->
         </div>
     </form>
 </div>
