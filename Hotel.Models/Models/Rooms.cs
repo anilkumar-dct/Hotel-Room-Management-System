@@ -9,9 +9,17 @@ namespace Hotel.Models.Models
 {
     public class Rooms
     {
-        [Key] public int ID {  get; set; }
-        [Required] public int RoomNumber { get; set; }
-        [Required] public RoomStatus Status { get; set; } = RoomStatus.Available;
+        [Key]
+        public int ID { get; set; }
+
+        [Required]
+        public string RoomNumber { get; set; }
+
+        [Required]
+        public RoomStatus Status { get; set; } = RoomStatus.Available;
+
+        // Navigation Property to workers
+        public ICollection<Workers> Workers { get; set; } = new List<Workers>(); // Initialize to avoid null
     }
     public enum RoomStatus
     {

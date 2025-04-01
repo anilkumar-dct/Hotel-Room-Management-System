@@ -23,20 +23,11 @@
                     <div class="col-sm-10">
                         <div class="mb-3">
                             <label for="roomSelect" class="form-label">Select Room</label>
-                            <select class="form-select" id="roomSelect" name="roomNumber">
-                                <option value="" selected disabled>-- Choose a room --</option>
-                                <option value="101">Room 101</option>
-                                <option value="102">Room 102</option>
-                                <option value="103">Room 103</option>
-                                <option value="104">Room 104</option>
-                                <option value="105">Room 105</option>
-                                <option value="106">Room 106</option>
-                                <option value="107">Room 107</option>
-                                <option value="108">Room 108</option>
-                                <option value="109">Room 109</option>
-                                <option value="110">Room 110</option>
-                                <option value="111">Room 111</option>
-                                <option value="112">Room 112</option>
+                            <select  class="form-control">
+                                @foreach (var room in Model.AvailableRooms)
+                                {
+                                    <option value="@room.RoomNumber">@room.RoomNumber</option>
+                                }
                             </select>
                         </div>
                     </div>

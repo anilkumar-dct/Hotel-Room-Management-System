@@ -29,8 +29,9 @@ namespace Hotel.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("RoomNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -43,73 +44,73 @@ namespace Hotel.Database.Migrations
                         new
                         {
                             ID = 1,
-                            RoomNumber = 101,
+                            RoomNumber = "101",
                             Status = 1
                         },
                         new
                         {
                             ID = 2,
-                            RoomNumber = 102,
+                            RoomNumber = "102",
                             Status = 0
                         },
                         new
                         {
                             ID = 3,
-                            RoomNumber = 103,
+                            RoomNumber = "103",
                             Status = 2
                         },
                         new
                         {
                             ID = 4,
-                            RoomNumber = 104,
+                            RoomNumber = "104",
                             Status = 0
                         },
                         new
                         {
                             ID = 5,
-                            RoomNumber = 105,
+                            RoomNumber = "105",
                             Status = 1
                         },
                         new
                         {
                             ID = 6,
-                            RoomNumber = 106,
+                            RoomNumber = "106",
                             Status = 1
                         },
                         new
                         {
                             ID = 7,
-                            RoomNumber = 107,
+                            RoomNumber = "107",
                             Status = 1
                         },
                         new
                         {
                             ID = 8,
-                            RoomNumber = 108,
+                            RoomNumber = "108",
                             Status = 1
                         },
                         new
                         {
                             ID = 9,
-                            RoomNumber = 109,
+                            RoomNumber = "109",
                             Status = 1
                         },
                         new
                         {
                             ID = 10,
-                            RoomNumber = 110,
+                            RoomNumber = "110",
                             Status = 1
                         },
                         new
                         {
                             ID = 11,
-                            RoomNumber = 111,
+                            RoomNumber = "111",
                             Status = 1
                         },
                         new
                         {
                             ID = 12,
-                            RoomNumber = 112,
+                            RoomNumber = "112",
                             Status = 1
                         });
                 });
@@ -129,10 +130,16 @@ namespace Hotel.Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoomNumber")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RoomNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Workers");
 
@@ -142,22 +149,41 @@ namespace Hotel.Database.Migrations
                             ID = 1,
                             Availability = 0,
                             Name = "Jone",
-                            RoomNumber = 101
+                            RoomId = 1,
+                            RoomNumber = "101"
                         },
                         new
                         {
                             ID = 2,
                             Availability = 2,
                             Name = "Sarah Jonshon",
-                            RoomNumber = 102
+                            RoomId = 2,
+                            RoomNumber = "102"
                         },
                         new
                         {
                             ID = 3,
                             Availability = 1,
                             Name = "Emily",
-                            RoomNumber = 103
+                            RoomId = 3,
+                            RoomNumber = "103"
                         });
+                });
+
+            modelBuilder.Entity("Hotel.Models.Models.Workers", b =>
+                {
+                    b.HasOne("Hotel.Models.Models.Rooms", "Rooms")
+                        .WithMany("Workers")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("Hotel.Models.Models.Rooms", b =>
+                {
+                    b.Navigation("Workers");
                 });
 #pragma warning restore 612, 618
         }
