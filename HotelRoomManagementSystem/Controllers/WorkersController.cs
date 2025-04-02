@@ -1,6 +1,7 @@
 ﻿using Hotel.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelRoomManagementSystem.Controllers
 {
@@ -53,6 +54,27 @@ namespace HotelRoomManagementSystem.Controllers
             }
             workers.RoomNumber = selectedRoom.RoomNumber;
             _context.Workers.Add(workers);
+            _context.SaveChanges();
+            return RedirectToAction("Workers");
+        }
+        [HttpGet]
+        public IActionResult Edit(int? id) {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Workers worker = _context.Workers.FirstOrDefault(w=>w.ID==id);
+            ViewBag.RoomList = new SelectList(_context.Rooms, "ID", "RoomNumber");
+            return View(worker);   
+        }
+        [HttpPost]
+        public IActionResult Edit(Workers workers)
+        {
+            var worker = _context.Workers.FirstOrDefault(w=>w.ID==workers.ID);
+            worker.Name = workers.Name;
+            worker.Availability = workers.Availability;
+            worker.RoomId = workers.RoomId;
+            _context.Workers.Update(worker);
             _context.SaveChanges();
             return RedirectToAction("Workers");
         }

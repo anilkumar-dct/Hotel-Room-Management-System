@@ -48,7 +48,19 @@
                     <td>@data.Name</td>
                     <td class="bg-primary">@data.Availability</td>
                     <td>@data.RoomNumber</td>
-                    <td></td>
+                    <td>
+                    <div class="d-flex justify-content-center gap-4">
+                        <a asp-action="Edit" asp-controller="Workers" asp-route-id="@data.ID" class="btn btn-outline-primary">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a asp-action="Rooms" asp-route-id="@data.ID" class="btn btn-outline-secondary">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
+                        <a asp-action="Rooms" asp-route-id="@data.ID" class="btn btn-outline-danger">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </div>
+                    </td>
                 </tr>
             }
 
