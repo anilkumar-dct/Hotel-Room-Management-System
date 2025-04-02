@@ -1,5 +1,6 @@
 ﻿using Hotel.Models.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelRoomManagementSystem.Controllers
 {
@@ -18,7 +19,7 @@ namespace HotelRoomManagementSystem.Controllers
         //Shorting Applying
         public IActionResult AllRooms(RoomStatus? roomStatus)
         {
-            ViewBag.SelectedRoom = roomStatus;
+           ViewBag.SelectedRoom = roomStatus;
            var rooms = _context.Rooms.AsQueryable();
             if (roomStatus.HasValue)
             {
@@ -46,6 +47,13 @@ namespace HotelRoomManagementSystem.Controllers
             _context.Rooms.Update(room);
             _context.SaveChanges();
             return RedirectToAction("Rooms");
+        }
+        public IActionResult Details(int id)
+        {
+            
+            var room= _context.Rooms.FirstOrDefault(r=>r.ID == id);
+            room = _context.Rooms.Include(r => r.Workers).FirstOrDefault(r=>r.ID==id);
+            return View(room);
         }
     }
 }
