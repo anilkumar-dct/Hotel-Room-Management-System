@@ -32,11 +32,21 @@
                
               @foreach(var data in Model){
                   <tr>
-                     <td>@data.ID</td>
+                    <td>@data.ID</td>
                     <td>@data.RoomNumber</td>
                     <td class="bg-primary">@data.Status</td>
                    
-                    <td></td>
+                    <td>
+                        <div class="w-75 btn-group d-flex justify-content-center">
+                            <a class="btn btn-primary rounded-2 btn-sm m-1" asp-controller="Rooms" asp-action="Edit" asp-route-id="@data.ID">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a class="btn btn-danger rounded-2 btn-sm m-1" asp-controller="Rooms" asp-action="Delete" asp-route-id="@data.ID">
+                                <i class="bi bi-trash3"></i> Delete
+                            </a>
+                        </div>
+
+                    </td>
                   </tr>
               }
              

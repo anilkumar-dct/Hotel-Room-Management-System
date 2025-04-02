@@ -26,5 +26,26 @@ namespace HotelRoomManagementSystem.Controllers
             }
             return View("Rooms",rooms.ToList());
         }
+        public IActionResult Edit(int? id)
+        {
+            var room = _context.Rooms.FirstOrDefault(r => r.ID == id);
+            return View(room);
+
+        }
+        [HttpPost]
+        public IActionResult Edit(Rooms rooms)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("ID", "Selected Id Is Not Found");
+                return NotFound();
+            }
+            //fetch the selected id data Rooms id
+            var room = _context.Rooms.Find(rooms.ID);
+            room.Status = rooms.Status;
+            _context.Rooms.Update(room);
+            _context.SaveChanges();
+            return RedirectToAction("Rooms");
+        }
     }
 }
