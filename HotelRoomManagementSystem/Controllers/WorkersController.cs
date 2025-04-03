@@ -73,7 +73,13 @@ namespace HotelRoomManagementSystem.Controllers
             var worker = _context.Workers.FirstOrDefault(w=>w.ID==workers.ID);
             worker.Name = workers.Name;
             worker.Availability = workers.Availability;
+            
             worker.RoomId = workers.RoomId;
+            var selectedRoom = _context.Rooms.FirstOrDefault(r => r.ID == workers.RoomId);
+            if (selectedRoom != null)
+            {
+                worker.RoomNumber = selectedRoom.RoomNumber;
+            }
             _context.Workers.Update(worker);
             _context.SaveChanges();
             return RedirectToAction("Workers");
